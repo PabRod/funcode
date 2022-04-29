@@ -8,6 +8,12 @@ Funtional approach to ordinary differential equations solver
 $ pip install funcode
 ```
 
+or, for `poetry` users:
+
+```bash
+poetry install
+```
+
 ## Usage
 
 - TODO
