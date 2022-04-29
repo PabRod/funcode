@@ -15,8 +15,13 @@ def test_solve_1d():
     assert(np.allclose(y, y_exact, atol = 1e-3))
 
 def test_solve_2d():
-    f = lambda y, t : np.r_[y[1], -y[0]]
-    y_0 = np.r_[1, 0]
-    t = np.linspace(0, 1, 101)
+    f = lambda y, t : np.r_[y[0], -y[1]]
+    y_0 = np.r_[1, 2]
+    t = np.linspace(0, 1, 5001)
 
     y = solve(f, y_0, t, forward_euler)
+    
+    f_exact = lambda t : np.r_[np.exp(t), 2*np.exp(-t)]
+    y_exact = list(map(f_exact, t))
+
+    assert(np.allclose(y, y_exact, atol = 1e-3))

@@ -10,6 +10,7 @@ readme = "README.md"
 python = "^3.9"
 pytest = "^7.1.2"
 numpy = "^1.22.3"
+ipykernel = "^6.13.0"
 
 [tool.poetry.dev-dependencies]
 
