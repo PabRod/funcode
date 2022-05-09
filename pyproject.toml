@@ -16,6 +16,10 @@ myst-nb = "^0.14.0"
 sphinx-autoapi = "^1.8.4"
 sphinx-rtd-theme = "^1.0.0"
 matplotlib = "^3.5.1"
+pandocfilters = "^1.5.0"
+pandoc-eqnos = "^2.5.0"
+pandoc-fignos = "^2.4.0"
+entangled-filters = "^0.8.3"
 
 [tool.poetry.dev-dependencies]
 
