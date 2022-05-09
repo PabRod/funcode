@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Pablo Rodríguez" />
-  <title>Hello world</title>
+  <title>Solving ordinary differential equations</title>
   <style type="text/css">
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
@@ -92,18 +92,216 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </head>
 <body class="d-flex flex-column">
 
+<nav id="TOC" class="navbar navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a href="#" class="ml-5 mr-auto navbar-brand">Solving ordinary
+differential equations<br><span style="font-size: smaller">with
+functional programming 
+        by <i>Pablo Rodríguez</i></span></a>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<ul>
+<li><a href="#the-problem">The problem</a></li>
+</ul>
+</div>
+</nav>
 
 <!-- <nav class="navbar navbar-dark navbar-expand-md bg-dark mb-4">
+<p class="subtitle">with functional programming</p>
 <p class="author">Pablo Rodríguez</p>
 </nav>
  -->
 
 <main role="main" class="flex-fill"><div class="container my-5">
-<p>Hi there</p>
+<h1 id="the-problem">The problem</h1>
+<p>All ordinary differential equations are created equal:</p>
+<p><span class="math display">\[
+\frac{d \vec y}{dt} = f(\vec y, t)
+\]</span></p>
+<p>This is the same to saying that the only possible difference between
+ordinary differential equations is the function <span
+class="math inline">\(f\)</span>.</p>
+<h2 id="examples">Examples</h2>
+<h3 id="exponential-decay">Exponential decay</h3>
+<h4 id="formula">Formula</h4>
+<p><span class="math display">\[
+f(y, t) = -r y
+\]</span></p>
+<h4 id="implementation">Implementation</h4>
 <div class="annotated-code">
-<p><span><em>«hello-world»=</em></span></p>
-<div class="sourceCode" id="hello-world"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="hello-world-1"><a href="#hello-world-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello&quot;</span>)</span></code></pre></div>
+<p><span><em>«odes»=</em></span></p>
+<div class="sourceCode" id="odes" data-file="src/funcode/odes.py"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="odes-1"><a href="#odes-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="odes-2"><a href="#odes-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="odes-3"><a href="#odes-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> exponential_decay(r <span class="op">=</span> <span class="dv">1</span>):</span>
+<span id="odes-4"><a href="#odes-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot; Implementation of an exponential decay &quot;&quot;&quot;</span>    </span>
+<span id="odes-5"><a href="#odes-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> f(y, t):</span>
+<span id="odes-6"><a href="#odes-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span>r <span class="op">*</span> y</span>
+<span id="odes-7"><a href="#odes-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="odes-8"><a href="#odes-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> f</span></code></pre></div>
+</div>
+<h3 id="harmonic-oscillator">Harmonic oscillator</h3>
+<h4 id="formula-1">Formula</h4>
+<h4 id="implementation-1">Implementation</h4>
+<div class="annotated-code">
+<p><span><em>«odes»+</em></span></p>
+<div class="sourceCode" id="odes" data-file="src/funcode/odes.py"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="odes-1"><a href="#odes-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> harmonic_oscillator(omega_0, zeta <span class="op">=</span> <span class="dv">0</span>):</span>
+<span id="odes-2"><a href="#odes-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot; Implementation of a harmonic oscillator with damping &quot;&quot;&quot;</span></span>
+<span id="odes-3"><a href="#odes-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> f(y, t):</span>
+<span id="odes-4"><a href="#odes-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.r_[y[<span class="dv">1</span>], </span>
+<span id="odes-5"><a href="#odes-5" aria-hidden="true" tabindex="-1"></a>                     <span class="op">-</span><span class="dv">2</span> <span class="op">*</span> zeta <span class="op">*</span> omega_0 <span class="op">*</span> y[<span class="dv">1</span>] <span class="op">-</span> omega_0<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> y[<span class="dv">0</span>]]</span>
+<span id="odes-6"><a href="#odes-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="odes-7"><a href="#odes-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> f</span></code></pre></div>
+</div>
+<h2 id="solving-a-differential-equation">Solving a differential
+equation</h2>
+<p>The purpose of any method for solving an ordinary differential
+equation is to forecast the future. More technically, the purpose is to
+take an initial state <span class="math inline">\(\vec y_0, t_0\)</span>
+and a future time <span class="math inline">\(t_1\)</span>, and return
+the state <span class="math inline">\(\vec y_1\)</span> corresponding to
+the new time:</p>
+<p><span class="math display">\[
+\lbrace y_0, t_0, t_1; f \rbrace \longrightarrow y_1
+\]</span></p>
+<p>Our approach consists on building an <code>integrator</code> method
+that actually performs this operation. <code>integrator</code> has to be
+a functional, in the sense that its input has to be the function <span
+class="math inline">\(f\)</span>:</p>
+<p><span class="math display">\[
+(y_0, t_0, t_1) \xrightarrow {integrator(f)} y_1
+\]</span></p>
+<h3
+id="analytical-example-one-dimensional-state-independent-differential-equation">Analytical
+example: one-dimensional state-independent differential equation</h3>
+<p>A one-dimensional state-independent differential equation can obtain
+by making:</p>
+<p><span class="math display">\[
+f(y, t) = F(t)
+\]</span></p>
+<p>the differential equation can be rewritten as:</p>
+<p><span class="math display">\[
+dy = F(t) dt
+\]</span></p>
+<p>and solved by direct integration:</p>
+<p><span class="math display">\[
+(y_0, t_0, t_1) \xrightarrow {integrator(F)} y_1 = y_0 +
+\int_{t_0}^{t_1}  F(s) ds
+\]</span></p>
+<h3 id="numerical-example-euler-integration">Numerical example: Euler
+integration</h3>
+<p>Euler’s integration method is the most basic numerical method for
+approximating a future state <span class="math inline">\(y_1\)</span>.
+It takes advantage of the fact that a derivative can be approximated by
+a non-infinitesimal ratio of variation, i.e.:</p>
+<p><span class="math display">\[
+\frac{dy}{dt} \approx \frac{\Delta y}{\Delta t}
+\]</span></p>
+<p>and thus:</p>
+<p><span class="math display">\[
+\Delta y \approx f(y, t) \Delta t
+\]</span></p>
+<p>We can thus write:</p>
+<p><span class="math display">\[
+(y_0, t_0, t_1) \xrightarrow {integrator(f)} y_1 \approx y_0 + (t_1 -
+t_0) \cdot f(y_0, t_0)
+\]</span></p>
+<h3 id="implementation-2">Implementation</h3>
+<div class="annotated-code">
+<p><span><em>«integrators»=</em></span></p>
+<div class="sourceCode" id="integrators"
+data-file="src/funcode/integrators.py"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="integrators-1"><a href="#integrators-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward_euler(f):</span>
+<span id="integrators-2"><a href="#integrators-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot; Forward Euler method</span></span>
+<span id="integrators-3"><a href="#integrators-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="integrators-4"><a href="#integrators-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="integrators-5"><a href="#integrators-5" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="integrators-6"><a href="#integrators-6" aria-hidden="true" tabindex="-1"></a><span class="co">    f : function</span></span>
+<span id="integrators-7"><a href="#integrators-7" aria-hidden="true" tabindex="-1"></a><span class="co">        Function to solve.</span></span>
+<span id="integrators-8"><a href="#integrators-8" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="integrators-9"><a href="#integrators-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="integrators-10"><a href="#integrators-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> updater(y_0, t_0, t_1):</span>
+<span id="integrators-11"><a href="#integrators-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot; Implementation of a single step in the forward Euler method. &quot;&quot;&quot;</span></span>
+<span id="integrators-12"><a href="#integrators-12" aria-hidden="true" tabindex="-1"></a>        y_1 <span class="op">=</span> y_0 <span class="op">+</span> (t_1 <span class="op">-</span> t_0) <span class="op">*</span> f(y_0, t_0)</span>
+<span id="integrators-13"><a href="#integrators-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> y_1</span>
+<span id="integrators-14"><a href="#integrators-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="integrators-15"><a href="#integrators-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> updater</span></code></pre></div>
+</div>
+<div class="annotated-code">
+<p><span><em>«integrators»+</em></span></p>
+<div class="sourceCode" id="integrators"
+data-file="src/funcode/integrators.py"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="integrators-1"><a href="#integrators-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predcorr_euler(f):</span>
+<span id="integrators-2"><a href="#integrators-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot; Prediction-correction Euler method</span></span>
+<span id="integrators-3"><a href="#integrators-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="integrators-4"><a href="#integrators-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="integrators-5"><a href="#integrators-5" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="integrators-6"><a href="#integrators-6" aria-hidden="true" tabindex="-1"></a><span class="co">    f : function</span></span>
+<span id="integrators-7"><a href="#integrators-7" aria-hidden="true" tabindex="-1"></a><span class="co">        Function to solve.</span></span>
+<span id="integrators-8"><a href="#integrators-8" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="integrators-9"><a href="#integrators-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="integrators-10"><a href="#integrators-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> updater(y_0, t_0, t_1):</span>
+<span id="integrators-11"><a href="#integrators-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot; Implementation of a single step in the prediction-correction Euler method. &quot;&quot;&quot;</span></span>
+<span id="integrators-12"><a href="#integrators-12" aria-hidden="true" tabindex="-1"></a>        y_a <span class="op">=</span> forward_euler(f)(y_0, t_0, t_1)</span>
+<span id="integrators-13"><a href="#integrators-13" aria-hidden="true" tabindex="-1"></a>        y_1 <span class="op">=</span> y_0 <span class="op">+</span> (t_1 <span class="op">-</span> t_0) <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> (f(y_0, t_0) <span class="op">+</span> f(y_a, t_0))</span>
+<span id="integrators-14"><a href="#integrators-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> y_1</span>
+<span id="integrators-15"><a href="#integrators-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="integrators-16"><a href="#integrators-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> updater</span></code></pre></div>
+</div>
+<p>Numerical integrators are usually applied iteratively:</p>
+<p><span class="math display">\[
+y_n = y_{n-1} + integrator(y_{n-1}, t_{n-1}, t_n)
+\]</span></p>
+<p>The code below takes care of this in a practical way:</p>
+<div class="annotated-code">
+<p><span><em>«iterators»=</em></span></p>
+<div class="sourceCode" id="iterators"
+data-file="src/funcode/iterators.py"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="iterators-1"><a href="#iterators-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tabulate(y_0, t, integrator):</span>
+<span id="iterators-2"><a href="#iterators-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot; Iterates the integrator function over the time interval t</span></span>
+<span id="iterators-3"><a href="#iterators-3" aria-hidden="true" tabindex="-1"></a><span class="co">    and returns the result as a list.</span></span>
+<span id="iterators-4"><a href="#iterators-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="iterators-5"><a href="#iterators-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="iterators-6"><a href="#iterators-6" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="iterators-7"><a href="#iterators-7" aria-hidden="true" tabindex="-1"></a><span class="co">    y_0 : array_like</span></span>
+<span id="iterators-8"><a href="#iterators-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Initial condition.</span></span>
+<span id="iterators-9"><a href="#iterators-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="iterators-10"><a href="#iterators-10" aria-hidden="true" tabindex="-1"></a><span class="co">    t : array_like</span></span>
+<span id="iterators-11"><a href="#iterators-11" aria-hidden="true" tabindex="-1"></a><span class="co">        Time points.</span></span>
+<span id="iterators-12"><a href="#iterators-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="iterators-13"><a href="#iterators-13" aria-hidden="true" tabindex="-1"></a><span class="co">    integrator : function</span></span>
+<span id="iterators-14"><a href="#iterators-14" aria-hidden="true" tabindex="-1"></a><span class="co">        Integrator function.</span></span>
+<span id="iterators-15"><a href="#iterators-15" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="iterators-16"><a href="#iterators-16" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> [y_0]</span>
+<span id="iterators-17"><a href="#iterators-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, t.size):</span>
+<span id="iterators-18"><a href="#iterators-18" aria-hidden="true" tabindex="-1"></a>        y.append(integrator(y[i<span class="op">-</span><span class="dv">1</span>], t[i<span class="op">-</span><span class="dv">1</span>], t[i]))</span>
+<span id="iterators-19"><a href="#iterators-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="iterators-20"><a href="#iterators-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y</span></code></pre></div>
+</div>
+<p>Now we are ready to solve:</p>
+<div class="annotated-code">
+<p><span><em>«src/funcode/funcode.py»=</em></span></p>
+<div class="sourceCode" id="cb1" data-file="src/funcode/funcode.py"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> funcode.iterators <span class="im">import</span> tabulate</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve(f, y0, t, integrator):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot; Solve and ODE</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Using the given initial condition, time points, and integrator.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    f : function</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">        Function to solve.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    y0 : array_like</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">        Initial condition.</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    t : array_like</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">        Time points.</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tabulate(y0, t, integrator(f))</span></code></pre></div>
 </div>
 </div></main>
 
@@ -115,5 +313,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="hello-world-
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 <!-- Mathjax -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>

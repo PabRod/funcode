@@ -1,3 +1,5 @@
+# ~\~ language=Python filename=src/funcode/iterators.py
+# ~\~ begin <<lit/index.md|iterators>>[0]
 def tabulate(y_0, t, integrator):
     """ Iterates the integrator function over the time interval t
     and returns the result as a list.
@@ -18,3 +20,4 @@ def tabulate(y_0, t, integrator):
         y.append(integrator(y[i-1], t[i-1], t[i]))
     
     return y
+# ~\~ end

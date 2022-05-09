@@ -1,3 +1,5 @@
+# ~\~ language=Python filename=src/funcode/integrators.py
+# ~\~ begin <<lit/index.md|integrators>>[0]
 def forward_euler(f):
     """ Forward Euler method
     
@@ -13,7 +15,8 @@ def forward_euler(f):
         return y_1
     
     return updater
-
+# ~\~ end
+# ~\~ begin <<lit/index.md|integrators>>[1]
 def predcorr_euler(f):
     """ Prediction-correction Euler method
     
@@ -30,3 +33,4 @@ def predcorr_euler(f):
         return y_1
     
     return updater
+# ~\~ end

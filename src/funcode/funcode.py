@@ -1,3 +1,5 @@
+# ~\~ language=Python filename=src/funcode/funcode.py
+# ~\~ begin <<lit/index.md|src/funcode/funcode.py>>[0]
 from funcode.iterators import tabulate
 
 def solve(f, y0, t, integrator):
@@ -16,3 +18,4 @@ def solve(f, y0, t, integrator):
         Time points.
     """
     return tabulate(y0, t, integrator(f))
+# ~\~ end
