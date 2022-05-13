@@ -117,11 +117,48 @@ functional programming
 <h1 id="the-problem">The problem</h1>
 <p>All ordinary differential equations are created equal:</p>
 <p><span class="math display">\[
-\frac{d \vec y}{dt} = f(\vec y, t)
+\frac{d \vec y}{dt} = \vec f(\vec y, t)
 \]</span></p>
 <p>This is the same to saying that the only possible difference between
 ordinary differential equations is the function <span
-class="math inline">\(f\)</span>.</p>
+class="math inline">\(\vec f\)</span>. That is, all the properties of
+the dynamical system are coded in that function.</p>
+<p>The vector notation allows for using the same formula for different
+number of dimensions, such as:</p>
+<p><span class="math display">\[
+\frac{dy}{dt} = f(y, t)
+\]</span></p>
+<p>or:</p>
+<p><span class="math display">\[
+\begin{cases}
+\frac{du}{dt} = f(u, v, t) \\
+\frac{dv}{dt} = g(u, v, t)
+\end{cases}
+\]</span></p>
+<h3 id="higher-order-differential-equations">Higher order differential
+equations</h3>
+<p>Higher order differential equations can also be adapted to our
+formula by using the trick of introducing new variables. We can
+illustrate this with an example. Consider the equation below:</p>
+<p><span class="math display">\[
+\frac{d^2y}{dt^2} = f(\frac{dy}{dt}, y, t)
+\]</span></p>
+<p>if we define:</p>
+<p><span class="math display">\[
+\omega \equiv \frac{dy}{dt}
+\]</span></p>
+<p>we can rewrite our equation as a first-order equation:</p>
+<p><span class="math display">\[
+\frac{d \omega}{dt} = f(\omega, y, t)
+\]</span></p>
+<p>Putting all together, we end up with a two-dimensional first order
+equation:</p>
+<p><span class="math display">\[
+\begin{cases}
+\frac{dy}{dt} = \omega \\
+\frac{d\omega}{dt} = f(\omega, y, t)
+\end{cases}
+\]</span></p>
 <h2 id="examples">Examples</h2>
 <h3 id="exponential-decay">Exponential decay</h3>
 <h4 id="formula">Formula</h4>
@@ -143,6 +180,12 @@ class="sourceCode python"><code class="sourceCode python"><span id="odes-1"><a h
 </div>
 <h3 id="harmonic-oscillator">Harmonic oscillator</h3>
 <h4 id="formula-1">Formula</h4>
+<p><span class="math display">\[
+\begin{cases}
+\frac{d\theta}{dt} = \omega \\
+\frac{d\omega}{dt} = -2 \zeta \omega_0 \omega - \omega_0^2 \theta
+\end{cases}
+\]</span></p>
 <h4 id="implementation-1">Implementation</h4>
 <div class="annotated-code">
 <p><span><em>«odes»+</em></span></p>
@@ -164,14 +207,14 @@ and a future time <span class="math inline">\(t_1\)</span>, and return
 the state <span class="math inline">\(\vec y_1\)</span> corresponding to
 the new time:</p>
 <p><span class="math display">\[
-\lbrace y_0, t_0, t_1; f \rbrace \longrightarrow y_1
+\lbrace \vec y_0, t_0, t_1; \vec f \rbrace \longrightarrow \vec y_1
 \]</span></p>
 <p>Our approach consists on building an <code>integrator</code> method
 that actually performs this operation. <code>integrator</code> has to be
 a functional, in the sense that its input has to be the function <span
 class="math inline">\(f\)</span>:</p>
 <p><span class="math display">\[
-(y_0, t_0, t_1) \xrightarrow {integrator(f)} y_1
+(\vec y_0, t_0, t_1) \xrightarrow {integrator(\vec f)} \vec y_1
 \]</span></p>
 <h3
 id="analytical-example-one-dimensional-state-independent-differential-equation">Analytical
@@ -197,16 +240,16 @@ approximating a future state <span class="math inline">\(y_1\)</span>.
 It takes advantage of the fact that a derivative can be approximated by
 a non-infinitesimal ratio of variation, i.e.:</p>
 <p><span class="math display">\[
-\frac{dy}{dt} \approx \frac{\Delta y}{\Delta t}
+\frac{d\vec y}{dt} \approx \frac{\Delta \vec y}{\Delta t}
 \]</span></p>
 <p>and thus:</p>
 <p><span class="math display">\[
-\Delta y \approx f(y, t) \Delta t
+\Delta \vec y \approx \vec f(\vec y, t) \Delta t
 \]</span></p>
 <p>We can thus write:</p>
 <p><span class="math display">\[
-(y_0, t_0, t_1) \xrightarrow {integrator(f)} y_1 \approx y_0 + (t_1 -
-t_0) \cdot f(y_0, t_0)
+(\vec y_0, t_0, t_1) \xrightarrow {integrator(\vec f)} \vec y_1 \approx
+\vec y_0 + (t_1 - t_0) \cdot \vec f(\vec y_0, t_0)
 \]</span></p>
 <h3 id="implementation-2">Implementation</h3>
 <div class="annotated-code">
@@ -250,9 +293,10 @@ class="sourceCode python"><code class="sourceCode python"><span id="integrators-
 <span id="integrators-15"><a href="#integrators-15" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="integrators-16"><a href="#integrators-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> updater</span></code></pre></div>
 </div>
+<h3 id="iterate">Iterate</h3>
 <p>Numerical integrators are usually applied iteratively:</p>
 <p><span class="math display">\[
-y_n = y_{n-1} + integrator(y_{n-1}, t_{n-1}, t_n)
+\vec y_n = \vec y_{n-1} + integrator(\vec y_{n-1}, t_{n-1}, t_n)
 \]</span></p>
 <p>The code below takes care of this in a practical way:</p>
 <div class="annotated-code">

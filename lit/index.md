@@ -9,10 +9,58 @@ author: Pablo Rodríguez
 All ordinary differential equations are created equal:
 
 $$
-\frac{d \vec y}{dt} = f(\vec y, t)
+\frac{d \vec y}{dt} = \vec f(\vec y, t)
 $$
 
-This is the same to saying that the only possible difference between ordinary differential equations is the function $f$.
+This is the same to saying that the only possible difference between ordinary differential equations is the function $\vec f$.
+That is, all the properties of the dynamical system are coded in that function.
+
+The vector notation allows for using the same formula for different number of dimensions, such as:
+
+$$
+\frac{dy}{dt} = f(y, t)
+$$
+
+or:
+
+$$
+\begin{cases}
+\frac{du}{dt} = f(u, v, t) \\
+\frac{dv}{dt} = g(u, v, t)
+\end{cases}
+$$
+
+### Higher order differential equations
+
+Higher order differential equations can also be adapted to our formula by using the trick of introducing new variables.
+We can illustrate this with an example.
+Consider the equation below:
+
+$$
+\frac{d^2y}{dt^2} = f(\frac{dy}{dt}, y, t)
+$$
+
+if we define:
+
+$$
+\omega \equiv \frac{dy}{dt}
+$$
+
+we can rewrite our equation as a first-order equation:
+
+$$
+\frac{d \omega}{dt} = f(\omega, y, t)
+$$
+
+Putting all together, we end up with a two-dimensional first order equation:
+
+$$
+\begin{cases}
+\frac{dy}{dt} = \omega \\
+\frac{d\omega}{dt} = f(\omega, y, t)
+\end{cases}
+$$
+
 
 ## Examples
 
@@ -41,6 +89,14 @@ def exponential_decay(r = 1):
 
 #### Formula
 
+$$
+\begin{cases}
+\frac{d\theta}{dt} = \omega \\
+\frac{d\omega}{dt} = -2 \zeta \omega_0 \omega - \omega_0^2 \theta
+\end{cases}
+$$
+
+
 #### Implementation
 
 ```{.python file=src/funcode/odes.py #odes}
@@ -58,14 +114,14 @@ The purpose of any method for solving an ordinary differential equation is to fo
 More technically, the purpose is to take an initial state $\vec y_0, t_0$ and a future time $t_1$, and return the state $\vec y_1$ corresponding to the new time:
 
 $$
-\lbrace y_0, t_0, t_1; f \rbrace \longrightarrow y_1
+\lbrace \vec y_0, t_0, t_1; \vec f \rbrace \longrightarrow \vec y_1
 $$
 
 Our approach consists on building an `integrator` method that actually performs this operation.
 `integrator` has to be a functional, in the sense that its input has to be the function $f$:
 
 $$
-(y_0, t_0, t_1) \xrightarrow {integrator(f)} y_1
+(\vec y_0, t_0, t_1) \xrightarrow {integrator(\vec f)} \vec y_1
 $$
 
 ### Analytical example: one-dimensional state-independent differential equation
@@ -94,19 +150,19 @@ Euler's integration method is the most basic numerical method for approximating 
 It takes advantage of the fact that a derivative can be approximated by a non-infinitesimal ratio of variation, i.e.:
 
 $$
-\frac{dy}{dt} \approx \frac{\Delta y}{\Delta t}
+\frac{d\vec y}{dt} \approx \frac{\Delta \vec y}{\Delta t}
 $$
 
 and thus:
 
 $$
-\Delta y \approx f(y, t) \Delta t
+\Delta \vec y \approx \vec f(\vec y, t) \Delta t
 $$
 
 We can thus write:
 
 $$
-(y_0, t_0, t_1) \xrightarrow {integrator(f)} y_1 \approx y_0 + (t_1 - t_0) \cdot f(y_0, t_0) 
+(\vec y_0, t_0, t_1) \xrightarrow {integrator(\vec f)} \vec y_1 \approx \vec y_0 + (t_1 - t_0) \cdot \vec f(\vec y_0, t_0) 
 $$
 
 ### Implementation
@@ -148,10 +204,12 @@ def predcorr_euler(f):
     return updater
 ```
 
+### Iterate
+
 Numerical integrators are usually applied iteratively:
 
 $$
-y_n = y_{n-1} + integrator(y_{n-1}, t_{n-1}, t_n)
+\vec y_n = \vec y_{n-1} + integrator(\vec y_{n-1}, t_{n-1}, t_n)
 $$
 
 The code below takes care of this in a practical way:
