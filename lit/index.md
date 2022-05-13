@@ -108,7 +108,7 @@ def harmonic_oscillator(omega_0, zeta = 0):
     
     return f
 ```
-## Solving a differential equation
+# Solving a differential equation
 
 The purpose of any method for solving an ordinary differential equation is to forecast the future.
 More technically, the purpose is to take an initial state $\vec y_0, t_0$ and a future time $t_1$, and return the state $\vec y_1$ corresponding to the new time:
@@ -124,7 +124,7 @@ $$
 (\vec y_0, t_0, t_1) \xrightarrow {integrator(\vec f)} \vec y_1
 $$
 
-### Analytical example: one-dimensional state-independent differential equation
+## Analytical example: one-dimensional state-independent differential equation
 
 A one-dimensional state-independent differential equation can obtain by making:
 
@@ -144,7 +144,7 @@ $$
 (y_0, t_0, t_1) \xrightarrow {integrator(F)} y_1 = y_0 + \int_{t_0}^{t_1}  F(s) ds
 $$
 
-### Numerical example: Euler integration
+## Numerical example: Euler integration
 
 Euler's integration method is the most basic numerical method for approximating a future state $y_1$.
 It takes advantage of the fact that a derivative can be approximated by a non-infinitesimal ratio of variation, i.e.:
@@ -165,7 +165,7 @@ $$
 (\vec y_0, t_0, t_1) \xrightarrow {integrator(\vec f)} \vec y_1 \approx \vec y_0 + (t_1 - t_0) \cdot \vec f(\vec y_0, t_0) 
 $$
 
-### Implementation
+## Implementation
 
 ```{.python file=src/funcode/integrators.py #integrators}
 def forward_euler(f):
@@ -204,7 +204,7 @@ def predcorr_euler(f):
     return updater
 ```
 
-### Iterate
+## Iterate
 
 Numerical integrators are usually applied iteratively:
 

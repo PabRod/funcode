@@ -103,6 +103,8 @@ functional programming
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 <ul>
 <li><a href="#the-problem">The problem</a></li>
+<li><a href="#solving-a-differential-equation">Solving a differential
+equation</a></li>
 </ul>
 </div>
 </nav>
@@ -198,8 +200,8 @@ class="sourceCode python"><code class="sourceCode python"><span id="odes-1"><a h
 <span id="odes-6"><a href="#odes-6" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="odes-7"><a href="#odes-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> f</span></code></pre></div>
 </div>
-<h2 id="solving-a-differential-equation">Solving a differential
-equation</h2>
+<h1 id="solving-a-differential-equation">Solving a differential
+equation</h1>
 <p>The purpose of any method for solving an ordinary differential
 equation is to forecast the future. More technically, the purpose is to
 take an initial state <span class="math inline">\(\vec y_0, t_0\)</span>
@@ -216,9 +218,9 @@ class="math inline">\(f\)</span>:</p>
 <p><span class="math display">\[
 (\vec y_0, t_0, t_1) \xrightarrow {integrator(\vec f)} \vec y_1
 \]</span></p>
-<h3
+<h2
 id="analytical-example-one-dimensional-state-independent-differential-equation">Analytical
-example: one-dimensional state-independent differential equation</h3>
+example: one-dimensional state-independent differential equation</h2>
 <p>A one-dimensional state-independent differential equation can obtain
 by making:</p>
 <p><span class="math display">\[
@@ -233,8 +235,8 @@ dy = F(t) dt
 (y_0, t_0, t_1) \xrightarrow {integrator(F)} y_1 = y_0 +
 \int_{t_0}^{t_1}  F(s) ds
 \]</span></p>
-<h3 id="numerical-example-euler-integration">Numerical example: Euler
-integration</h3>
+<h2 id="numerical-example-euler-integration">Numerical example: Euler
+integration</h2>
 <p>Euler’s integration method is the most basic numerical method for
 approximating a future state <span class="math inline">\(y_1\)</span>.
 It takes advantage of the fact that a derivative can be approximated by
@@ -251,7 +253,7 @@ a non-infinitesimal ratio of variation, i.e.:</p>
 (\vec y_0, t_0, t_1) \xrightarrow {integrator(\vec f)} \vec y_1 \approx
 \vec y_0 + (t_1 - t_0) \cdot \vec f(\vec y_0, t_0)
 \]</span></p>
-<h3 id="implementation-2">Implementation</h3>
+<h2 id="implementation-2">Implementation</h2>
 <div class="annotated-code">
 <p><span><em>«integrators»=</em></span></p>
 <div class="sourceCode" id="integrators"
@@ -293,7 +295,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="integrators-
 <span id="integrators-15"><a href="#integrators-15" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="integrators-16"><a href="#integrators-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> updater</span></code></pre></div>
 </div>
-<h3 id="iterate">Iterate</h3>
+<h2 id="iterate">Iterate</h2>
 <p>Numerical integrators are usually applied iteratively:</p>
 <p><span class="math display">\[
 \vec y_n = \vec y_{n-1} + integrator(\vec y_{n-1}, t_{n-1}, t_n)
