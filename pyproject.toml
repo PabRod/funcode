@@ -21,6 +21,8 @@ pandoc-eqnos = "^2.5.0"
 pandoc-fignos = "^2.4.0"
 entangled-filters = "^0.8.3"
 pytest-cov = "^3.0.0"
+dask = "^2022.5.0"
+graphviz = "^0.20"
 
 [tool.poetry.dev-dependencies]
 
