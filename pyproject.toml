@@ -20,6 +20,7 @@ pandocfilters = "^1.5.0"
 pandoc-eqnos = "^2.5.0"
 pandoc-fignos = "^2.4.0"
 entangled-filters = "^0.8.3"
+pytest-cov = "^3.0.0"
 
 [tool.poetry.dev-dependencies]
 
