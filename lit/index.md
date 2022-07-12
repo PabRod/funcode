@@ -126,7 +126,7 @@ $$
 
 ## Analytical example: one-dimensional state-independent differential equation
 
-A one-dimensional state-independent differential equation can obtain by making:
+A one-dimensional state-independent differential equation can be obtained by making:
 
 $$
 f(y, t) = F(t)
@@ -209,7 +209,7 @@ def predcorr_euler(f):
 Numerical integrators are usually applied iteratively:
 
 $$
-\vec y_n = \vec y_{n-1} + integrator(\vec y_{n-1}, t_{n-1}, t_n)
+\vec y_n = \vec y_{n-1} + integrator(\vec f)(\vec y_{n-1}, t_{n-1}, t_n)
 $$
 
 The code below takes care of this in a practical way:

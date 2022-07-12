@@ -221,8 +221,8 @@ class="math inline">\(f\)</span>:</p>
 <h2
 id="analytical-example-one-dimensional-state-independent-differential-equation">Analytical
 example: one-dimensional state-independent differential equation</h2>
-<p>A one-dimensional state-independent differential equation can obtain
-by making:</p>
+<p>A one-dimensional state-independent differential equation can be
+obtained by making:</p>
 <p><span class="math display">\[
 f(y, t) = F(t)
 \]</span></p>
@@ -298,7 +298,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="integrators-
 <h2 id="iterate">Iterate</h2>
 <p>Numerical integrators are usually applied iteratively:</p>
 <p><span class="math display">\[
-\vec y_n = \vec y_{n-1} + integrator(\vec y_{n-1}, t_{n-1}, t_n)
+\vec y_n = \vec y_{n-1} + integrator(\vec f)(\vec y_{n-1}, t_{n-1}, t_n)
 \]</span></p>
 <p>The code below takes care of this in a practical way:</p>
 <div class="annotated-code">
